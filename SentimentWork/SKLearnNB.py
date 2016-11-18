@@ -92,7 +92,7 @@ def train():
     
     
     
-    # create the processing pipeline
+    # creating the processing pipeline
     # http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html
     # http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfTransformer.html
     # http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html
@@ -108,10 +108,11 @@ def train():
 #    train_indices = 1000
     predict = pipeline.predict(testData['text'].values)
     score = pipeline.score(testData['class'].values.astype(str),predict)
+    #print k
     # print the accuracy
     print('Accuracy score on the test data :', score)
     #saving the pipeline to be used in future
-    with open('predictionModel.pkl', 'wb') as f:
+    with open('../ModelParams/SklearnpredictionModel.pkl', 'wb') as f:
         pickle.dump(pipeline, f)
 
 
@@ -119,24 +120,26 @@ def train():
     
 
 
-def prediction(l=None):
+def predict(l=None):
     #to classify our sentence
     print("loading model")
-    pipeline = pickle.load(open('predictionModel.pkl'))
+    pipeline = pickle.load(open('../ModelParams/SklearnpredictionModel.pkl'))
     #test sentence if l in none
-    Sentence = "This is a beautiful day"
+    #Sentence = "This is a beautiful day"
     print("predicting the sentiment" )
-    if l is None:
-        print("the sentiment is", pipeline.predict([Sentence]).values)
-    else:
-        print("the sentiment for the list of sentences",pipeline.predict(l).tolist())
-        
+    predictions = pipeline.predict(l).tolist()
+    print("the sentiment for the list of sentences",predictions)
+    return predictions
+    
+    
+#    if l is None:
+#        print("the sentiment is", pipeline.predict([Sentence]).values)
+#    else:
+#        print("the sentiment for the list of sentences",pipeline.predict(l).tolist())
+#        
 if __name__ == '__main__':
     #call this function to train the function, comment it out if you just want predict    
     train()
     #pass a list of sentences which we need to classify
     listOfSentences = ['This is a horrible day','This is a beautiful day']    
-    prediction(listOfSentences)
-    dataset='mnist.pkl.gz'
-    #predict(dataset,n_hidden,n_in,n_out)
-    #params = test_mlp()
+    predict(listOfSentences)

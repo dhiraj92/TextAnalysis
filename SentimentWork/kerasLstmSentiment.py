@@ -4,8 +4,6 @@ Created on Thu Nov 17 17:57:49 2016
 
 @author: Dhiraj
 """
-
-# -*- coding: utf-8 -*-
 ''' This pipeline demonstrates the use of Word2vec vectors for text
     classification with LSTM (RNN) neural networks. Possibly inclusion of a CNN
     layer on top of this will be useful.
@@ -246,14 +244,22 @@ def train():
     
     print('Test score:', score[0])
     print('Test accuracy:', score[1])
+    print ('Saving parameters')
+    json_string = model.to_json()
+    model.save_weights('../ModelParams/LSTMparams.h5',overwrite=True)
+    with open('../ModelParams/LSTMArch.p', 'wb') as f:
+        pickle.dump(json_string, f)
+    with open('../ModelParams/W2VModel.p', 'wb') as f:
+        pickle.dump((index_dict, word_vectors), f)
+    
 
-def test():
+def predict(sentences):
     from keras.models import model_from_json
-    json_string = pickle.load(open('modelArchJson.p','rb'))
+    json_string = pickle.load(open('../ModelParams/LSTMArch.p','rb'))
     model = model_from_json(json_string)
     #model.compile
-    model.load_weights('my_model_weights.h5')
-    w2indx, w2vec =  pickle.load(open('modelParams.p','rb'))
+    model.load_weights('../ModelParams/LSTMparams.h5')
+    w2indx, w2vec =  pickle.load(open('../ModelParams/W2VModel.p','rb'))
     def parse_dataset(data):
         #import pdb;pdb.set_trace()            
         txt = data.lower().replace('\n', '').split()
@@ -264,11 +270,20 @@ def test():
             except:
                 new_txt.append(0)
         return new_txt
-    testData = parse_dataset("this is a horrible day")
+    testData = [parse_dataset(x) for x in sentences] 
     model.compile
     #import pdb;pdb.set_trace() 
-    X_train = sequence.pad_sequences([testData], maxlen = maxlen)
+    X_train = sequence.pad_sequences(testData, maxlen = maxlen)
     p = model.predict(X_train)
-    print p
+    return p
     #import pdb;pdb.set_trace() 
-test()
+    
+if __name__ == '__main__':
+    
+    #call this function to train the function, comment it out if you just want predict    
+    train()
+    
+    #pass a list of sentences which we need to classify
+    listOfSentences = ['This is a horrible day','This is a beautiful day']    
+    predictArray = predict(listOfSentences)
+
