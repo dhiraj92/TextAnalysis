@@ -71,13 +71,13 @@ cpu_count = multiprocessing.cpu_count()
 
 # label the movie review data source as positive(1) or negative(0)
 SOURCES = [
-    ('MoviePosNeg\\neg\*.txt',  0),
-    ('MoviePosNeg\\pos\*.txt',  1)
+    ('..\MoviePosNeg\\neg\*.txt',  0),
+    ('..\MoviePosNeg\\pos\*.txt',  1)
 ]
 
 TESTSOURCE = [
-    ('MoviePosNeg\\test\\neg\*.txt',  0),
-    ('MoviePosNeg\\test\\pos\*.txt',  1)
+    ('..\MoviePosNeg\\test\\neg\*.txt',  0),
+    ('..\MoviePosNeg\\test\\pos\*.txt',  1)
 ]
 
 ############################################

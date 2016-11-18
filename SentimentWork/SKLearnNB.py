@@ -20,13 +20,13 @@ import pickle
 
 # label the movie review data source as positive or negative
 SOURCES = [
-    ('MoviePosNeg\\neg\*.txt',  'neg'),
-    ('MoviePosNeg\\pos\*.txt',  'pos')
+    ('..\MoviePosNeg\\neg\*.txt',  'neg'),
+    ('..\MoviePosNeg\\pos\*.txt',  'pos')
 ]
 
 TESTSOURCE = [
-    ('MoviePosNeg\\test\\neg\*.txt',  'neg'),
-    ('MoviePosNeg\\test\\pos\*.txt',  'pos')
+    ('..\MoviePosNeg\\test\\neg\*.txt',  'neg'),
+    ('..\MoviePosNeg\\test\\pos\*.txt',  'pos')
 ]
 
 ############################################
