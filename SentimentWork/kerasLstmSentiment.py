@@ -281,9 +281,9 @@ def predict(sentences):
 if __name__ == '__main__':
     
     #call this function to train the function, comment it out if you just want predict    
-    train()
+    #train()
     
     #pass a list of sentences which we need to classify
-    listOfSentences = ['This is a horrible day','This is a beautiful day']    
+    listOfSentences = ['This is a horrible day','This is not a beautiful day','So not happy']    
     predictArray = predict(listOfSentences)
 
